@@ -1,0 +1,9 @@
+*
+!pyproject.toml
+!uv.lock
+!README.md
+!LICENSE
+!handoff_ledger/
+!handoff_ledger/**
+**/__pycache__/
+**/*.py[cod]

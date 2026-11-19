@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.8.0"
+          python-version: "3.11"
+      - name: Build distributions
+        run: |
+          uv lock --check
+          uv build
+      - name: Smoke-test the installed wheel
+        shell: bash
+        run: |
+          smoke_dir="$RUNNER_TEMP/handoff-wheel"
+          uv venv --python 3.11 "$smoke_dir/venv"
+          uv pip install --python "$smoke_dir/venv/bin/python" dist/*.whl
+          cd "$smoke_dir"
+          export HANDOFF_DATA_DIR="$smoke_dir/data"
+          "$smoke_dir/venv/bin/handoff-ledger" serve --host 127.0.0.1 --port 8080 >server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          if ! curl --fail --silent --show-error --retry 10 --retry-connrefused --retry-delay 1 \
+              http://127.0.0.1:8080/api/health; then
+            cat server.log
+            exit 1
+          fi
+          curl --fail --silent --show-error http://127.0.0.1:8080/ -o index.html
+          grep -qi '<title>.*Handoff Ledger' index.html
+          curl --fail --silent --show-error http://127.0.0.1:8080/assets/app.js -o app.js
+          test -s app.js
+          "$smoke_dir/venv/bin/handoff-ledger" backup "$smoke_dir/backup.sqlite3"
+          test -s "$smoke_dir/backup.sqlite3"
+      - name: Smoke-test Docker Compose
+        shell: bash
+        run: |
+          trap 'docker compose down --volumes' EXIT
+          if ! docker compose up --build --wait --wait-timeout 60; then
+            docker compose logs
+            exit 1
+          fi
+          curl --fail --silent --show-error http://127.0.0.1:8080/api/health

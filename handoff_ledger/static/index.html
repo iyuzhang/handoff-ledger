@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="A workspace for preparing and reviewing evidence-backed handoffs.">
+  <title>Handoff Ledger</title>
+  <link rel="stylesheet" href="/assets/workspace.css">
+  <link rel="stylesheet" href="/assets/editor.css">
+  <script type="module" src="/assets/app.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="/" aria-label="Handoff Ledger home">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>Handoff Ledger</span>
+    </a>
+    <div class="masthead-actions">
+      <button id="model-status" type="button" class="connection-pill" aria-haspopup="dialog" title="Model connection settings"><span class="status-dot"></span><span>Checking model</span></button>
+    </div>
+  </header>
+  <div id="notice" class="notice" hidden role="status">
+    <span id="notice-message"></span>
+    <button type="button" id="dismiss-notice" aria-label="Dismiss notification" class="icon-button">×</button>
+  </div>
+  <main id="onboarding" class="onboarding" aria-labelledby="onboarding-title">
+    <div class="onboarding-copy">
+      <div class="eyebrow">Handoff workspace</div>
+      <h1 id="onboarding-title">Leave a handoff<br>people can verify.</h1>
+      <p>Collect the documents people rely on, turn them into a handoff, and review each step alongside its source.</p>
+      <button type="button" id="first-project" class="button primary" data-action="new-project">Create a project <span aria-hidden="true">↗</span></button>
+    </div>
+    <ol class="onboarding-flow" aria-label="Handoff workflow">
+      <li><strong>Gather sources</strong><span>Add notes, documentation, or existing runbooks.</span></li>
+      <li><strong>Prepare a draft</strong><span>Write steps by hand or generate a draft with evidence.</span></li>
+      <li><strong>Review and seal</strong><span>Record what you verified and export the handoff.</span></li>
+    </ol>
+  </main>
+  <div id="workspace" class="workspace" hidden>
+    <aside class="sidebar" aria-label="Projects and handoffs">
+      <div class="sidebar-inner">
+        <div class="side-heading">
+          <label for="project-select">Project</label>
+          <button type="button" class="icon-button" data-action="new-project" aria-label="Create a project" title="Create a project">+</button>
+        </div>
+        <select id="project-select" aria-label="Active project"></select>
+        <button type="button" class="quiet-link" data-action="edit-project">Edit project details</button>
+        <div class="side-section">
+          <div class="side-heading">
+            <h2>Handoffs</h2>
+            <button type="button" class="icon-button" data-action="new-handoff" aria-label="Create a handoff" title="Create a handoff">+</button>
+          </div>
+          <nav id="handoff-list" class="handoff-list" aria-label="Project handoffs"></nav>
+        </div>
+        <div class="side-section" id="job-section" hidden>
+          <div class="side-heading">
+            <h2>Generation</h2>
+            <button type="button" class="icon-button" data-action="refresh-jobs" aria-label="Refresh generation jobs" title="Refresh generation jobs">↻</button>
+          </div>
+          <div id="job-list" aria-live="polite"></div>
+        </div>
+      </div>
+    </aside>
+    <main id="record-panel" class="record-panel" aria-label="Handoff editor">
+      <div id="project-header" class="project-header"></div>
+      <div id="record"></div>
+    </main>
+    <aside class="context-panel" aria-label="Evidence and sources">
+      <div id="context" class="context-content"></div>
+    </aside>
+  </div>
+  <dialog id="dialog" aria-labelledby="dialog-title">
+    <div class="dialog-header">
+      <h2 id="dialog-title"></h2>
+      <button type="button" id="dialog-close" class="icon-button" aria-label="Close dialog">×</button>
+    </div>
+    <div id="dialog-content" class="dialog-content"></div>
+  </dialog>
+  <noscript><p class="notice">Enable JavaScript to use Handoff Ledger.</p></noscript>
+</body>
+</html>

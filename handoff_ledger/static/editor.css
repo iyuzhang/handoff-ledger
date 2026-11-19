@@ -1,0 +1,68 @@
+.record-panel { min-width: 0; }
+.project-header {
+  min-height: 84px;
+  padding: 17px clamp(14px, 3vw, 36px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+.project-header h1 { margin-block: 2px 3px; font-size: clamp(1.24rem, 2.3vw, 1.75rem); letter-spacing: -.035em; }
+.project-header .button { flex: 0 0 auto; }
+#record { padding: 25px clamp(14px, 3vw, 36px) 50px; }
+.record-empty { padding: clamp(26px, 7vw, 90px) clamp(16px, 4vw, 42px); border: 1px dashed #b8c8bb; border-radius: 9px; display: grid; gap: 14px; justify-items: start; }
+.record-empty h2 { font-family: Georgia, serif; font-size: clamp(1.9rem, 3.5vw, 3.1rem); font-weight: 500; line-height: 1.05; letter-spacing: -.045em; }
+.record-heading { display: grid; gap: 10px; margin-bottom: 18px; overflow-wrap: anywhere; }
+.record-heading h2 { font-family: Georgia, serif; font-size: clamp(2.1rem, 4vw, 3.5rem); line-height: 1.03; font-weight: 500; letter-spacing: -.045em; }
+.record-toolbar { display: flex; flex-wrap: wrap; gap: 6px; justify-content: space-between; }
+.record-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.record-meta { color: var(--muted); font-size: .8rem; }
+.record-fields { display: grid; gap: 13px; border: 1px solid var(--line); border-radius: 8px; padding: 14px; background: var(--paper); }
+details.record-fields > summary { font-size: .95rem; font-weight: 720; cursor: pointer; }
+details.record-fields[open] > summary { padding-bottom: 12px; }
+.details-content, .steps, .step-fields { display: grid; gap: 12px; }
+.steps { gap: 13px; }
+.section-header { display: flex; justify-content: space-between; align-items: center; gap: 7px; margin: 22px 0 10px; }
+.section-header h3 { font-size: 1.08rem; }
+.step-card { background: var(--paper); border-radius: 8px; border: 1px solid var(--line); padding: 13px; display: grid; gap: 10px; min-width: 0; }
+.step-card[data-selected="true"] { box-shadow: inset 3px 0 #45816e; border-color: #a3bdad; }
+.step-toolbar { display: flex; gap: 6px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.step-toolbar .record-actions { gap: 4px; }
+.step-fields { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.step-fields > :first-child, .step-fields > :last-child { grid-column: 1 / -1; }
+.step-note { color: var(--muted); font-size: .78rem; }
+.step-status { max-width: 144px; padding: 5px 7px; font-size: .8rem; }
+.read-value { white-space: pre-wrap; overflow-wrap: anywhere; font-size: .9rem; line-height: 1.5; }
+.read-value:empty::after { content: "—"; color: var(--muted); }
+.reviewer-block { padding: 11px 13px; background: var(--mint); border: 1px solid var(--line); border-radius: 6px; display: grid; gap: 6px; }
+.evidence-list { display: grid; gap: 10px; }
+.evidence-card { background: var(--paper); border: 1px solid var(--line); border-radius: 7px; padding: 10px; display: grid; gap: 7px; overflow-wrap: anywhere; }
+.evidence-card strong { font-size: .89rem; }
+.evidence-card pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 165px; overflow: auto; color: #35524b; background: #f1f4ec; border-radius: 4px; padding: 7px; font-family: var(--mono); font-size: .76rem; line-height: 1.45; }
+.evidence-card button { justify-self: start; }
+.source-viewer { background: #f3f6ef; border: 1px solid var(--line); border-radius: 6px; max-height: 405px; overflow: auto; font-family: var(--mono); font-size: .8rem; }
+.source-row { display: grid; grid-template-columns: max(3em, 42px) minmax(0, 1fr); gap: 10px; padding: 3px 8px 3px 0; }
+.source-row-number { text-align: right; color: var(--muted); user-select: none; }
+.source-row-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+.source-row[data-highlight="true"] { background: #e7ecd1; }
+.source-viewer:focus-visible { outline: 2px solid #2d7b6d; outline-offset: 2px; }
+.source-controls { display: flex; align-items: end; flex-wrap: wrap; gap: 8px; }
+.source-controls > .field { max-width: 180px; }
+.source-page { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: .77rem; }
+dialog[data-size="wide"] { width: min(920px, calc(100% - 28px)); }
+@media (max-width: 620px) {
+  .project-header { min-height: 68px; }
+  #record { padding-top: 17px; }
+  .step-fields { grid-template-columns: minmax(0, 1fr); }
+  .record-heading h2 { font-size: 2.05rem; }
+}
+@media (max-width: 370px) {
+  .project-header { align-items: start; flex-direction: column; }
+}
+.evidence-caption { margin-bottom: 8px; overflow-wrap: anywhere; }
+.record-summary { background: #edeee6; border-left: 3px solid #94baa9; border-radius: 0 5px 5px 0; padding: 9px 11px; max-height: 110px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .87rem; line-height: 1.5; }
+.reviewer-block + .record-fields { margin-top: 13px; }
+.quote-preview { margin: 0; min-height: 4em; max-height: 200px; padding: 10px; background: #f1f4ec; border: 1px solid var(--line); border-radius: 6px; white-space: pre-wrap; overflow-wrap: anywhere; overflow: auto; font: .8rem/1.5 var(--mono); }
+.ancestor-link { justify-self: start; padding-block: 0; }

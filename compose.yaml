@@ -1,0 +1,18 @@
+services:
+  ledger:
+    build: .
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      LLM_BASE_URL: ${LLM_BASE_URL:-}
+      LLM_MODEL: ${LLM_MODEL:-}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_JSON_MODE: ${LLM_JSON_MODE:-1}
+      LLM_TIMEOUT_SECONDS: ${LLM_TIMEOUT_SECONDS:-90}
+      HANDOFF_ALLOWED_HOSTS: ${HANDOFF_ALLOWED_HOSTS:-}
+    volumes:
+      - ledger-data:/data
+    restart: unless-stopped
+
+volumes:
+  ledger-data:
